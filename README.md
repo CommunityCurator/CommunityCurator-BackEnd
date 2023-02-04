@@ -1,6 +1,6 @@
 # CommunityCurator-BackEnd
 
-Team Silver - Spring 2022
+Team Silver - Fall 2022-Spring 2023
 
 # Members
 
