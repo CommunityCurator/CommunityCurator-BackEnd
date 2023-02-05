@@ -13,10 +13,12 @@ Team Silver - Fall 2022-Spring 2023
   - rlmackley3 - Robert Mackley - rmack001@odu.edu
 
 # MacOS commands to install django
-python3 -m venv <name>              //create virual enviroment
-source <name>/bin/activate           //activate virtual enviroment
-python -m pip install django         //install django
-pip install django-rest-framework    //install REST framework
+python3 -m venv <name>                    //create virual enviroment
+source <name>/bin/activate                //activate virtual enviroment
+python -m pip install django              //install django
+pip install django-rest-framework         //install REST framework
+pip install psycopg2                      //install psycopg2 driver 
+python -m pip install django-cors-headers //install corsheaders
 
 ## Development Push/Merge Instructions
 Adding/changing code
