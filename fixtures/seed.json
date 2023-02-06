@@ -71,6 +71,19 @@
       "name": "Food",
       "created_at": "2023-08-01"
     }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "userName": "jlavi001",
+      "firstName": "Joel",
+      "lastName": "Lavinder",
+      "email": "jlavi001@odu.edu",
+      "password": "CuratedCommunity",
+      "bio": "Computer science student at Old Dominion University",
+      "image": "",
+      "createdAt": "2023-02-02"
+    }
   }
-  
 ]

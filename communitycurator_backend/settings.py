@@ -88,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': ''
+        'PASSWORD': 'C0mmunityCurator',
+        'HOST': 'communitycurator-db.cunfvots0aff.us-east-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
