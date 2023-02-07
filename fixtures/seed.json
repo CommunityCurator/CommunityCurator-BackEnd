@@ -76,14 +76,56 @@
     "model": "users.user",
     "pk": 1,
     "fields": {
-      "userName": "jlavi001",
-      "firstName": "Joel",
-      "lastName": "Lavinder",
-      "email": "jlavi001@odu.edu",
-      "password": "CuratedCommunity",
-      "bio": "Computer science student at Old Dominion University",
+      "userName": "masterjake1",
+      "firstName": "Allan",
+      "lastName": "Sayles",
+      "email": "kiel2011@yahoo.com",
+      "password": "ahv8eeNgei",
+      "bio": "Wannabe communicator. Troublemaker. Friendly tv fanatic. Award-winning food junkie.",
       "image": "",
-      "createdAt": "2023-02-02"
+      "createdAt": "2016-03-28"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "userName": "DeadSad",
+      "firstName": "Anne",
+      "lastName": "Hooten",
+      "email": "garry1999@yahoo.com",
+      "password": "Eepe5ta1ah",
+      "bio": "Internet trailblazer. Hipster-friendly creator. Amateur tv fanatic. Pop culture aficionado.",
+      "image": "",
+      "createdAt": "2014-06-20"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "userName": "jamir",
+      "firstName": "Brandon",
+      "lastName": "Mixon",
+      "email": "manuel_gaylo@gmail.com",
+      "password": "jahTaiT6Oh",
+      "bio": "Introvert. Passionate internet enthusiast. Tvaholic. Devoted bacon practitioner.",
+      "image": "",
+      "createdAt": "2015-10-16"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "userName": "micaela",
+      "firstName": "Billy",
+      "lastName": "Higgins",
+      "email": "danielle1984@gmail.com",
+      "password": "Gaixai1lae0",
+      "bio": "Evil troublemaker. Hardcore twitter junkie. Passionate analyst. Future teen idol. Social media trailblazer.",
+      "image": "",
+      "createdAt": "2013-07-11 "
     }
   }
 ]
