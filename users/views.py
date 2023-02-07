@@ -1,6 +1,6 @@
-from user.models import User
+from users.models import User
 from django.http import JsonResponse, Http404
-from user.serializers import UserSerializer
+from users.serializers import UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status

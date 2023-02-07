@@ -11,4 +11,4 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     bio = models.CharField(max_length=500)
     image = models.CharField(max_length=100)
-    created_at = models.DateField()
+    createdAt = models.DateField()
