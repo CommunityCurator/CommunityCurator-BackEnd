@@ -12,3 +12,4 @@ class User(models.Model):
     bio = models.CharField(max_length=500)
     image = models.CharField(max_length=100)
     createdAt = models.DateField()
+
