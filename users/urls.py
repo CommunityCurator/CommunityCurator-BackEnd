@@ -8,5 +8,5 @@ app_name = "user"
 
 urlpatterns = [
     path('api/users/', views.users, name='users'),
-    #path('api/signup/', registration_view, name='signup'),
+    path('api/signup/', views.signup, name='signup'),
 ]

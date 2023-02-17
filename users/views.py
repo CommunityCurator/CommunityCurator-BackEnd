@@ -42,7 +42,7 @@ def user(request, id):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST',])
-def registration_view(request):
+def signup(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         data = {}
