@@ -15,8 +15,10 @@ class UserSerializer(serializers.ModelSerializer):
             'password2', 
             'bio', 
             'image', 
-            'createdAt'
+            'createdAt',
+            'groups'
         ]
+        depth = 2
         extra_kwargs = {
             'password': {'write_only': True}
         }
