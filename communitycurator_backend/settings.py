@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'groups',
+    'group',
+    'category',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -84,8 +86,12 @@ WSGI_APPLICATION = 'communitycurator_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'C0mmunityCurator',
+        'HOST': 'communitycurator-db.cunfvots0aff.us-east-1.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -131,3 +137,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+FIXTURE_DIRS = [
+    'fixtures',
+]
