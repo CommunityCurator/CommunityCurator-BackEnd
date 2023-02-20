@@ -1,6 +1,6 @@
-from groups.models import Group
+from group.models import Group
 from django.http import JsonResponse, Http404
-from groups.serializers import GroupSerializer
+from group.serializers import GroupSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
