@@ -9,6 +9,6 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     bio = models.CharField(max_length=500)
     image = models.CharField(max_length=100)
-    createdAt = models.DateField()
+    createdAt = models.DateTimeField()
     groups = models.ManyToManyField('group.Group')
 
