@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'group',
     'category',
     'users',
+    'comment',
 ]
 
 MIDDLEWARE = [
