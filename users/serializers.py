@@ -2,21 +2,21 @@ from rest_framework import serializers
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['userName', 'firstName', 'lastName', 'email',
+                  'password', 'bio', 'image', 'createdAt', 'groups']
+        depth = 2
+    
+class SignUp(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
-
     class Meta:
         model = User
         fields = [
             'userName', 
-            'firstName', 
-            'lastName', 
             'email',
             'password',
-            'password2', 
-            'bio', 
-            'image', 
-            'createdAt',
-            'groups'
+            'password2',
         ]
         depth = 2
         extra_kwargs = {
@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
     def save(self):
         user = User(
             email=self.validated_data['email'],
-            username=self.validated_data['username'],
+            userName=self.validated_data['userName']
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
@@ -36,4 +36,3 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-

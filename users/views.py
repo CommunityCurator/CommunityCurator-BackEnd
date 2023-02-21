@@ -1,10 +1,9 @@
 from users.models import User
 from django.http import JsonResponse, Http404
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, SignUp
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
 
 @api_view(['GET', 'POST'])
 def users(request):
@@ -50,7 +49,7 @@ def signup(request):
             user = serializer.save()
             data['response'] = "Successfully registered a new user."
             data['email'] = user.email
-            data['username'] = user.userName
+            data['userName'] = user.userName
         else:
             data = serializer.errors
         return Response(data)
