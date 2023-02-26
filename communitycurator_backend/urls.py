@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('group.urls')),
     path('', include('category.urls')),
     path('', include('comment.urls')),
+    path('', include('reply.urls')),
     path('', include('users.urls'))
 ]
