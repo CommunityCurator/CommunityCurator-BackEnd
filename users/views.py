@@ -40,3 +40,21 @@ def user(request, id):
             serializer.save()
             return Response({'user': serializer.data})
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST',])
+def signup(request):
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            user = serializer.save()
+            data['response'] = "Successfully registered a new user."
+            data['email'] = user.email
+            data['user_name'] = user.user_name
+            data['first_name'] = user.first_name
+            data['last_name'] = user.last_name
+            #data['city'] = user.city
+            #data['state'] = user.state
+        else:
+            data = serializer.errors
+        return Response(data)
