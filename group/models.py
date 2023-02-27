@@ -10,6 +10,6 @@ class Group(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50, blank = True)
     image = models.CharField(max_length=100, blank = True)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Category)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, blank=True)
