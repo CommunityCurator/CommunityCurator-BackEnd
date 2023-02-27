@@ -21,7 +21,7 @@ def comments(request):
 @api_view(['GET','POST', 'DELETE'])
 def comment(request, id):
     try:
-        data = Comment.objects.filter(group_id=id)
+        data = Comment.objects.get(pk=id)
     except Comment.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 

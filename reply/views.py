@@ -21,7 +21,7 @@ def replies(request):
 @api_view(['GET','POST', 'DELETE'])
 def reply(request, id):
     try:
-        data = Reply.objects.filter(comment_id=id)
+        data = Reply.objects.get(pk=id)
     except Reply.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
