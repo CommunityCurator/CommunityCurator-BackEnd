@@ -40,3 +40,24 @@ def group(request, id):
             return Response({'group': serializer.data})
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
+@api_view(['GET'])
+def group_city(request, city):
+    try:
+        data = Group.objects.filter(city=city)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_city': serializer.data})
+
+@api_view(['GET'])
+def group_city_user(request, city, userid):
+    try:
+        data = Group.objects.filter(city=city).exclude(users__id=userid)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_city_user': serializer.data})
