@@ -2,13 +2,17 @@ import pytest
 
 from .models import Category
 
-# Create your tests here.
+@pytest.fixture()
+def category():
+    newCategory = Category
+    newCategory.name = "Computer Science Majors"
+    # Still need to add groups
+    yield newCategory
+
 class TestCategory:
-    def test_name(self):
+    def test_name(self, category):
         # Initial Test
-        newCategory = Category
-        newCategory.name = "Computer Science Majors"
-        assert newCategory.name == "Computer Science Majors"
+        assert category.name == "Computer Science Majors"
         
         # Test character limit
         
