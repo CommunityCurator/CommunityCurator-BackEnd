@@ -12,4 +12,13 @@ class TestCategory:
         
         # Test character limit
         
-        # Test already availble
+        # Test if already availble
+        
+    def test_createdAt(self):
+        # Could use seed data for test as DateField is only used when .save() is called
+
+        assert True
+        
+    def test_groups(self):
+        # Could use seed data for this one as well
+        assert True
