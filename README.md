@@ -13,6 +13,10 @@ A PostgreSQL database system utilizing Django
 - Install necessary packages and libraries using `pip install -r requirements.txt`
     - This will automatically install libraries such as Django and PostgreSQL without having to search for it
 
+# Running Instructions
+- Run the development server with `python manage.py runserver`
+- Run test suite with `pytest`
+
 # Development Push/Merge Instructions
 Refer to [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
