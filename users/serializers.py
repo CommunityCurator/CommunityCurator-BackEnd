@@ -18,11 +18,11 @@ class SignUp(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
-            #'city',
-            #'state',
-            #'zipcode',
             'password',
             'password2',
+            'city',
+            'state',
+            'zipcode',
         ]
         depth = 2
         extra_kwargs = {
@@ -35,9 +35,9 @@ class SignUp(serializers.ModelSerializer):
             user_name=self.validated_data['user_name'],
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name'],
-            #city=self.validated_data['city'],
-            #state=self.validated_data['state'],
-            #zipcode=self.validated_data['zipcode'],
+            city=self.validated_data['city'],
+            state=self.validated_data['state'],
+            zipcode=self.validated_data['zipcode'],
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']

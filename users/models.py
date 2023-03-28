@@ -9,8 +9,9 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
+    zipcode = models.CharField(max_length=12)
     bio = models.CharField(max_length=500, blank=True)
     image = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    groups = models.ManyToManyField('group.Group', blank=True)
-
+    joined_groups = models.ManyToManyField('group.Group', blank=True)
+    suggested_groups = models.ManyToManyField('group.Group', blank=True)
