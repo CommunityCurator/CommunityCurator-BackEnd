@@ -55,7 +55,7 @@ def signup(request):
             data['last_name'] = user.last_name
             data['city'] = user.city
             data['state'] = user.state
-            data['zipcode'] = user.zipcode
+            #data['zipcode'] = user.zipcode
         else:
             data = serializer.errors
         return Response(data)
