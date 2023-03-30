@@ -11,5 +11,4 @@ class Group(models.Model):
     state = models.CharField(max_length=50, blank = True)
     image = models.CharField(max_length=100, blank = True)
     created_at = models.DateTimeField(auto_now_add=True)
-    categories = models.ManyToManyField(Category)
-    users = models.ManyToManyField(User, blank=True)
+    categories = models.ManyToManyField(Category, blank=True, related_name='joined_groups')
