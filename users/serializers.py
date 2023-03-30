@@ -6,7 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['user_name', 'id', 'first_name', 'last_name', 'email',
-                  'password', 'bio', 'image', 'created_at', 'groups']#'city', 'state',
+                  'password',  'bio', 'image', 'created_at', 'groups', 'city', 'state', 'categories']
         depth = 2
 
 class SignUp(serializers.ModelSerializer):
@@ -18,10 +18,10 @@ class SignUp(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
-            #'city',
-            #'state',
             'password',
             'password2',
+            'city',
+            'state',
         ]
         depth = 2
         extra_kwargs = {
@@ -34,8 +34,8 @@ class SignUp(serializers.ModelSerializer):
             user_name=self.validated_data['user_name'],
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name'],
-            #city=self.validated_data['city'],
-            #state=self.validated_data['state'],
+            city=self.validated_data['city'],
+            state=self.validated_data['state'],
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']

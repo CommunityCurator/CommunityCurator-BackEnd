@@ -53,8 +53,8 @@ def signup(request):
             data['user_name'] = user.user_name
             data['first_name'] = user.first_name
             data['last_name'] = user.last_name
-            #data['city'] = user.city
-            #data['state'] = user.state
+            data['city'] = user.city
+            data['state'] = user.state
         else:
             data = serializer.errors
         return Response(data)

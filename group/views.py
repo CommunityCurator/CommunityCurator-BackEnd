@@ -61,3 +61,26 @@ def group_city_user(request, city, userid):
     if request.method == 'GET':
         serializer = GroupSerializer(data, many=True)
         return Response({'group_city_user': serializer.data})
+    
+@api_view(['GET'])
+def group_category(request, category):
+    try:
+        data = Group.objects.filter(category=category)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_category': serializer.data})
+    
+@api_view(['GET'])
+def group_category_user(request, category, userid):
+    try:
+        data = Group.objects.filter(category=category).exclude(users__id=userid)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_category_user': serializer.data})
+    

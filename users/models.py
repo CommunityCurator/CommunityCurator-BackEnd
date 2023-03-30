@@ -12,5 +12,5 @@ class User(models.Model):
     bio = models.CharField(max_length=500, blank=True)
     image = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    groups = models.ManyToManyField('group.Group', blank=True)
-
+    groups = models.ManyToManyField('group.Group', blank=True, related_name='joined_users')
+    categories = models.ManyToManyField('category.Category', blank=True, related_name='joined_users')

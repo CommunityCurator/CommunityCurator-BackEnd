@@ -23,5 +23,5 @@ urlpatterns = [
     path('', include('group.urls')),
     path('', include('category.urls')),
     path('', include('comment.urls')),
-    path('', include('users.urls'))
+    path('', include('users.urls')),
 ]
