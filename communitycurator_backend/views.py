@@ -1,4 +1,4 @@
-
+from django.shortcuts import render
 from http.client import HTTPResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,6 +9,26 @@ from django.contrib.auth import authenticate
 import json
 import pdb; 
 
+from category.models import Category
+from group.models import Group
+from users.models import User
+
+def index(request):
+    """View function for home page of site."""
+
+    # Generate counts of some of the main objects
+    num_category = Category.objects.all().count()
+    num_group = Group.objects.all().count()
+    num_user = User.objects.all().count()
+
+    context = {
+        'num_category': num_category,
+        'num_group': num_group,
+        'num_user': num_user
+    }
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'index.html', context=context)
 
 @api_view(['POST'])
 def login(request):
