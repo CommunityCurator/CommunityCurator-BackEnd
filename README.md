@@ -8,8 +8,11 @@ A PostgreSQL database system utilizing Django
 
 # Package Installation
 
-- Create your [virtual enviornment](https://docs.python.org/3/library/venv.html) and activate it
-    - Best practice is to name this `env` or `venv` as it will be ignored from verion control
+- Create your [virtual environment](https://docs.python.org/3/tutorial/venv.html)
+    - Best practice is to name this `env` or `venv` as it will be ignored from version control
+    - Now, activate this virtual environment from the command line
+        - On MacOS & Linux: `source [nameOfEnvironment]/bin/activate`
+        - On Window's PowerShell: `[nameOfEnvironment]/bin/activate.bat`
 - Install necessary packages and libraries using `pip install -r requirements.txt`
     - This will automatically install libraries such as Django and PostgreSQL without having to search for it
 
