@@ -18,10 +18,11 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('', views.index),
     path('admin/', admin.site.urls),
     path('login/', views.login),
-    path('', include('group.urls')),
-    path('', include('category.urls')),
-    path('', include('comment.urls')),
+    path('api/groups/', include('group.urls')),
+    path('api/categories/', include('category.urls')),
+    path('api/comment/', include('comment.urls')),
     path('', include('users.urls')),
 ]

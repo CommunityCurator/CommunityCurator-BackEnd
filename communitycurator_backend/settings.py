@@ -66,7 +66,7 @@ ROOT_URLCONF = 'communitycurator_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/index'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
