@@ -81,8 +81,8 @@ def join_leave_group(request, userid, groupid):
         if group not in user.groups.all():
             return Response("Not a member of this group")
         user.groups.remove(group)
-    serializer = GroupSerializer(group)
-    return Response({'group': serializer.data})
+    serializer = GroupSerializer(user)
+    return Response({'user': serializer.data})
     
     
 @api_view(['GET', 'POST', 'DELETE'])
