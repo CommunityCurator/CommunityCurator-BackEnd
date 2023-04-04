@@ -1,6 +1,9 @@
 from users.models import User
+from group.models import Group
+from category.models import Category
 from django.http import JsonResponse, Http404
 from users.serializers import UserSerializer
+from group.serializers import GroupSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -58,3 +61,57 @@ def signup(request):
         else:
             data = serializer.errors
         return Response(data)
+    
+@api_view(['GET', 'POST', 'DELETE'])
+def join_leave_group(request, userid, groupid):
+    try:
+        user = User.objects.get(pk=userid)
+    except User.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    try:
+        group = Group.objects.get(pk=groupid)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'POST':
+        user.groups.add(group)
+    if request.method == 'DELETE':
+        user.groups.remove(group)
+    serializer = GroupSerializer(group)
+    return Response({serializer.data})
+    
+@api_view(['GET', 'POST', 'DELETE'])
+def add_remove_categories(request, userid, categoryid):
+    try:
+        user = User.objects.get(pk=userid)
+    except User.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    try:
+        category = Category.objects.get(pk=categoryid)
+    except Category.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'POST':
+        user.categories.add(category)
+    elif request.method == 'DELETE':
+        user.categories.remove(category)
+    serializer = UserSerializer(user)
+    return Response({serializer.data})
+
+@api_view(['GET',])
+def view_user_groups(request, userid):
+    try:
+        user = User.objects.get(pk=userid)
+    except User.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = GroupSerializer(user.groups, many=True)
+        return Response({'groups': serializer.data})
+    
+@api_view(['GET',])
+def view_user_categories(request, userid):
+    try:
+        user = User.objects.get(pk=userid)
+    except User.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response({'categories': serializer.data})
