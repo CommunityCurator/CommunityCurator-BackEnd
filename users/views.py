@@ -81,7 +81,7 @@ def join_leave_group(request, userid, groupid):
         if group not in user.groups.all():
             return Response("Not a member of this group")
         user.groups.remove(group)
-    serializer = GroupSerializer(user)
+    serializer = UserSerializer(user)
     return Response({'user': serializer.data})
     
     
@@ -103,8 +103,8 @@ def add_remove_categories(request, userid, categoryid):
         if category not in user.categories.all():
             return Response("No category to remove")
         user.categories.remove(category)
-    serializer = CategorySerializer(category)
-    return Response({'category': serializer.data})
+    serializer = UserSerializer(user)
+    return Response({'user': serializer.data})
 
 @api_view(['GET',])
 def view_user_groups(request, userid):
