@@ -5,5 +5,5 @@ from .models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'created_at',]
+        fields = ['id', 'name', 'created_at',]
         depth = 2

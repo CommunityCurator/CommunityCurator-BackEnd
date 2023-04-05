@@ -5,13 +5,13 @@ from .models import Comment
 @pytest.fixture()
 def newComment():
     newComment = Comment
-    newComment.comment = "Great idea! I will attend!"
-    # Still need group_id and user_id
+    newComment.comment = "Commenting on a post."
+    # Still need post_id and user_id
     yield newComment
 
 class TestComment:
-    def test_gID(self, newComment):
-        # Will need to create a group object then add a comment to it to test this
+    def test_pID(self, newComment):
+        # Will need to create a post object then add a comment to it to test this
         assert True
         
     def test_uID(self, newComment):
@@ -19,7 +19,7 @@ class TestComment:
         assert True
         
     def test_comment(self, newComment):
-        assert newComment.comment == "Great idea! I will attend!"
+        assert newComment.comment == "Commenting on a post."
         
         # Test size constraints
         
