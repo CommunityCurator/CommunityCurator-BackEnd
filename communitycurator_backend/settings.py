@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'group',
     'category',
     'users',
+    'post',
     'comment',
 ]
 

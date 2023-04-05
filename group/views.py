@@ -52,9 +52,9 @@ def group_city(request, city):
         return Response({'group_city': serializer.data})
 
 @api_view(['GET'])
-def group_city_user(request, city, userid):
+def group_city_user(request, city, joined_users):
     try:
-        data = Group.objects.filter(city=city).exclude(users__id=userid)
+        data = Group.objects.filter(city=city).exclude(joined_users__id=joined_users)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -63,9 +63,9 @@ def group_city_user(request, city, userid):
         return Response({'group_city_user': serializer.data})
     
 @api_view(['GET'])
-def group_category(request, category):
+def group_category(request, categories):
     try:
-        data = Group.objects.filter(category=category)
+        data = Group.objects.filter(categories__name=categories)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -74,9 +74,9 @@ def group_category(request, category):
         return Response({'group_category': serializer.data})
     
 @api_view(['GET'])
-def group_category_user(request, category, userid):
+def group_category_user(request, categories, joined_users):
     try:
-        data = Group.objects.filter(category=category).exclude(users__id=userid)
+        data = Group.objects.filter(categories__name=categories).exclude(joined_users__id=joined_users)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 

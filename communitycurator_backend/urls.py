@@ -23,6 +23,7 @@ urlpatterns = [
     path('login/', views.login),
     path('', include('group.urls')),
     path('api/categories/', include('category.urls')),
-    path('api/comment/', include('comment.urls')),
+    path('', include('post.urls')),
+    path('', include('comment.urls')),
     path('', include('users.urls')),
 ]
