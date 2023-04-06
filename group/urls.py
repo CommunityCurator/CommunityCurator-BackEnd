@@ -11,5 +11,6 @@ urlpatterns=[
     path ('api/search/group/<group_name>', views.group_group_name, name='group_group_name'),
     path ('api/search/group/<group_name>/<int:joined_users>', views.group_group_name_user, name='group_group_name_user'),
     path ('api/search/<city>/<group_name>', views.group_city_group_name, name='group_city_group_name'),
+    path('api/search/<keyword>', views.group_search, name='group_searh'),
     path ('api/search/<city>/<group_name>/<int:joined_users>', views.group_city_group_name_user, name='group_city_group_name_user')
 ]

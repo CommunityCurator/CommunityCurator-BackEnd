@@ -1,3 +1,4 @@
+from django.contrib.postgres.search import SearchVector
 from group.models import Group
 from django.http import JsonResponse, Http404
 from group.serializers import GroupSerializer
@@ -128,3 +129,14 @@ def group_city_group_name_user(request, city, group_name, joined_users):
         serializer = GroupSerializer(data, many=True)
         return Response({'group_city_group_name_user': serializer.data})
     
+@api_view(['GET'])
+def group_search(request, keyword):
+    try:
+        vector = SearchVector('group_name', 'city', 'description', 'categories')
+        data = Group.objects.annotate(search=vector).filter(search=keyword)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_search': serializer.data})
