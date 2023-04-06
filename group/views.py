@@ -43,7 +43,7 @@ def group(request, id):
 @api_view(['GET'])
 def group_city(request, city):
     try:
-        data = Group.objects.filter(city=city)
+        data = Group.objects.filter(city__iexact=city)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -54,7 +54,7 @@ def group_city(request, city):
 @api_view(['GET'])
 def group_city_user(request, city, joined_users):
     try:
-        data = Group.objects.filter(city=city).exclude(joined_users__id=joined_users)
+        data = Group.objects.filter(city__iexact=city).exclude(joined_users__id=joined_users)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -65,7 +65,7 @@ def group_city_user(request, city, joined_users):
 @api_view(['GET'])
 def group_category(request, categories):
     try:
-        data = Group.objects.filter(categories__name=categories)
+        data = Group.objects.filter(categories__name__iexact=categories)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -76,11 +76,55 @@ def group_category(request, categories):
 @api_view(['GET'])
 def group_category_user(request, categories, joined_users):
     try:
-        data = Group.objects.filter(categories__name=categories).exclude(joined_users__id=joined_users)
+        data = Group.objects.filter(categories__name__iexact=categories).exclude(joined_users__id=joined_users)
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = GroupSerializer(data, many=True)
         return Response({'group_category_user': serializer.data})
+
+@api_view(['GET'])
+def group_group_name(request, group_name):
+    try:
+        data = Group.objects.filter(group_name__iexact=group_name)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_group_name': serializer.data})
+
+@api_view(['GET'])
+def group_group_name_user(request, group_name, joined_users):
+    try:
+        data = Group.objects.filter(group_name__iexact=group_name).exclude(joined_users__id=joined_users)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_group_name_user': serializer.data})
+
+@api_view(['GET'])
+def group_city_group_name(request, city, group_name):
+    try:
+        data = Group.objects.filter(city__iexact=city, group_name__iexact=group_name)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_city_group_name': serializer.data})
+
+@api_view(['GET'])
+def group_city_group_name_user(request, city, group_name, joined_users):
+    try:
+        data = Group.objects.filter(city__iexact=city, group_name__iexact=group_name).exclude(joined_users__id=joined_users)
+    except Group.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = GroupSerializer(data, many=True)
+        return Response({'group_city_group_name_user': serializer.data})
     
