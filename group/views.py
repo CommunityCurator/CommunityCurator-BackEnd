@@ -132,8 +132,8 @@ def group_city_group_name_user(request, city, group_name, joined_users):
 @api_view(['GET'])
 def group_search(request, keyword):
     try:
-        vector = SearchVector('group_name', 'city', 'description', 'categories')
-        data = Group.objects.annotate(search=vector).filter(search=keyword)
+        vector = SearchVector('group_name', 'city', 'description', 'categories__name')
+        data = Group.objects.annotate(search=vector).filter(search=keyword).distinct('id')
     except Group.DoesNotExist:
         raise Response(status=status.HTTP_404_NOT_FOUND)
 
