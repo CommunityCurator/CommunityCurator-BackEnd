@@ -152,6 +152,6 @@ def suggest(request, id):
             category_query |= Q(categories=category)
         groups = Group.objects.filter(city=user.city).filter(category_query)
         serializer = GroupSerializer(groups, many=True)
-        return Response(serializer.data)
+        return Response({'groups': serializer.data})
     except User.DoesNotExist:
         return Response({'error': f'User with id {id} does not exist'})
