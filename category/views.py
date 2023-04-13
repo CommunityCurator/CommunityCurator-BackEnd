@@ -18,3 +18,13 @@ def categories(request):
             return Response({'category': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def not_added_categories(request, userid):
+    try:
+        data = Category.objects.all().exclude(joined_users__id=userid)
+    except Category.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CategorySerializer(data, many=True)
+        return Response({'categories': serializer.data})

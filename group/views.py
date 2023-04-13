@@ -1,10 +1,12 @@
 from django.contrib.postgres.search import SearchVector
 from group.models import Group
+from users.models import User
 from django.http import JsonResponse, Http404
 from group.serializers import GroupSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 
 @api_view(['GET', 'POST'])
 def groups(request):
@@ -140,3 +142,16 @@ def group_search(request, keyword):
     if request.method == 'GET':
         serializer = GroupSerializer(data, many=True)
         return Response({'group_search': serializer.data})
+
+@api_view(['GET'])
+def suggest(request, id):
+    try:
+        user = User.objects.get(id=id)
+        category_query = Q()
+        for category in user.categories.all():
+            category_query |= Q(categories=category)
+        groups = Group.objects.filter(city=user.city).filter(category_query)
+        serializer = GroupSerializer(groups, many=True)
+        return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response({'error': f'User with id {id} does not exist'})
