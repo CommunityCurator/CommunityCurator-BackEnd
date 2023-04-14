@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/categories/', include('category.urls')),
     path('', include('post.urls')),
     path('', include('comment.urls')),
+    path('', include('feedback.urls')),
     path('', include('users.urls')),
 ]
