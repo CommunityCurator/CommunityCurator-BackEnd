@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/user/<int:userid>/categories/<int:categoryid>', views.add_remove_categories, name='add_remove_categories'),
     path('api/user/<int:userid>/groups/', views.view_user_groups, name='view_user_groups'),
     path('api/user/<int:userid>/categories/', views.view_user_categories, name='view_user_categories'),
+    path('api/recommended/<int:userid>/', views.create_rec_list, name='view_create_rec_list'),
 ]

@@ -8,6 +8,9 @@ from category.serializers import CategorySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+import numpy as np
+from itertools import chain
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 @api_view(['GET', 'POST'])
@@ -127,3 +130,58 @@ def view_user_categories(request, userid):
         data = user.categories
         serializer = CategorySerializer(data, many=True)
         return Response({'categories': serializer.data})
+    
+#reshape vectors to have 1 row for a single sample
+def cosine_similarity_list(list1, list2):
+    list1 = list1.reshape(1,-1)
+    list2 = list2.reshape(1,-1)
+    return cosine_similarity(list1, list2)[0][0]
+
+def create_index_map(categories):
+    category_map = {}
+    for index, category in enumerate(categories):
+        category_map[category.id] = index
+    return category_map
+
+def group_recommend(user, groups, N=5):
+    # get list of unique categories from the groups
+    categories = set(chain.from_iterable([group.categories.all() for group in groups]))
+
+    category_map = create_index_map(categories)
+
+    # convert categories data (one-hot encoding)
+    group_category_vectors = []
+    for group in groups:
+        vector = np.zeros(len(categories))
+        for category in group.categories.all():
+            vector[category_map[category.id]] = 1
+        group_category_vectors.append(vector)
+
+    # convert user data (one-hot encoding)
+    user_category_vector = np.zeros(len(categories))
+    for category in user.categories.all():
+        user_category_vector[category_map[category.id]]=1
+
+    #calculate similarity
+    similarity_scores = [cosine_similarity_list(user_category_vector, group_vector) for group_vector in group_category_vectors]
+
+    # sort
+    sorted_groups = np.argsort(similarity_scores)[::1]
+
+    rec_groups = [groups[int(index)] for index in sorted_groups[:N]]
+
+    return rec_groups
+
+@api_view(['GET'])
+def create_rec_list(request, userid):
+    try:
+        user = User.objects.get(pk=userid)
+    except User.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        user = User.objects.get(pk=userid)
+        list = Group.objects.all()
+        filtered_groups = list.filter(city=user.city)
+        recomended_groups = group_recommend(user, filtered_groups, N=5)
+        serializer = GroupSerializer(recomended_groups, many=True)
+        return Response({'groups': serializer.data})
