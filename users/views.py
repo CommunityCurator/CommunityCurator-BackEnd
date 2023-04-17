@@ -143,15 +143,15 @@ def create_index_map(categories):
         category_map[category.id] = index
     return category_map
 
-def group_recommend(user, groups, N=5):
+def group_recommend(user, all_groups, joined_groups, N=5):
     # get list of unique categories from the groups
-    categories = set(chain.from_iterable([group.categories.all() for group in groups]))
+    categories = set(chain.from_iterable([group.categories.all() for group in all_groups]))
 
     category_map = create_index_map(categories)
 
     # convert categories data (one-hot encoding)
     group_category_vectors = []
-    for group in groups:
+    for group in all_groups:
         vector = np.zeros(len(categories))
         for category in group.categories.all():
             vector[category_map[category.id]] = 1
@@ -166,13 +166,24 @@ def group_recommend(user, groups, N=5):
             # Handle the case where the key is not found or print a message for debugging
             print(f"Category ID {category.id} not found in category_map")
 
+    # joined group vategories
+    if joined_groups is not None:
+        for group in joined_groups:
+            for category in group.categories.all():
+                try:
+                    user_category_vector[category_map[category.id]] = 1
+                except KeyError:
+                    # Handle the case where the key is not found or print a message for debugging
+                    print(f"Category ID {category.id} not found in category_map")
+
+
     #calculate similarity
     similarity_scores = [cosine_similarity_list(user_category_vector, group_vector) for group_vector in group_category_vectors]
 
     # sort
-    sorted_groups = np.argsort(similarity_scores)[::1]
+    sorted_groups = np.argsort(similarity_scores)[::-1]
 
-    rec_groups = [groups[int(index)] for index in sorted_groups[:N]]
+    rec_groups = [all_groups[int(index)] for index in sorted_groups[:N]]
 
     return rec_groups
 
@@ -186,6 +197,7 @@ def create_rec_list(request, userid):
         user = User.objects.get(pk=userid)
         list = Group.objects.all()
         filtered_groups = list.filter(city=user.city)
-        recomended_groups = group_recommend(user, filtered_groups, N=5)
+        joined_groups = user.groups.all()
+        recomended_groups = group_recommend(user, filtered_groups, joined_groups, N=5)
         serializer = GroupSerializer(recomended_groups, many=True)
         return Response({'groups': serializer.data})
