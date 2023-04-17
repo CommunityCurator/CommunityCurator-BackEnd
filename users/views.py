@@ -196,8 +196,8 @@ def create_rec_list(request, userid):
     if request.method == 'GET':
         user = User.objects.get(pk=userid)
         list = Group.objects.all()
-        filtered_groups = list.filter(city=user.city)
         joined_groups = user.groups.all()
+        filtered_groups = list.filter(city=user.city).exclude(id__in=joined_groups)
         recomended_groups = group_recommend(user, filtered_groups, joined_groups, N=5)
         serializer = GroupSerializer(recomended_groups, many=True)
         return Response({'groups': serializer.data})
