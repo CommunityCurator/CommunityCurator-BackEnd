@@ -160,7 +160,11 @@ def group_recommend(user, groups, N=5):
     # convert user data (one-hot encoding)
     user_category_vector = np.zeros(len(categories))
     for category in user.categories.all():
-        user_category_vector[category_map[category.id]]=1
+        try:
+            user_category_vector[category_map[category.id]] = 1
+        except KeyError:
+            # Handle the case where the key is not found or print a message for debugging
+            print(f"Category ID {category.id} not found in category_map")
 
     #calculate similarity
     similarity_scores = [cosine_similarity_list(user_category_vector, group_vector) for group_vector in group_category_vectors]
