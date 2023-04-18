@@ -1,9 +1,12 @@
+import json
 from post.models import Post
 from django.http import JsonResponse, Http404
+from django.core import serializers
 from post.serializers import PostSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from .models import Group, User
 
 @api_view(['GET', 'POST'])
 def posts(request):
@@ -40,3 +43,25 @@ def post(request, id):
             return Response({'post': serializer.data})
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
+
+@api_view(['POST'])
+def new_post(request):
+    if request.method == 'POST':
+        data = json.loads(request.body) 
+        group_id = data.get('group')
+        user_id = data.get('user')
+        content = data.get('content')
+
+        group = Group.objects.get(id=group_id)
+        user = User.objects.get(id=user_id)   
+
+        post = Post(group=group, user=user, content=content)
+        post.save()
+
+        response = serializers.serialize('json', [post])
+        return JsonResponse(response, safe=False, status=201)
+    else:
+        return JsonResponse(response, safe=False, status=201)
+
+
+
