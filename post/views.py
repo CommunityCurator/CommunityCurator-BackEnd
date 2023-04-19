@@ -63,5 +63,13 @@ def new_post(request):
     else:
         return JsonResponse(response, safe=False, status=201)
 
+@api_view(['GET'])
+def group_posts(request, id):
+    try:
+        data = Post.objects.filter(group__id=id)
+    except Post.DoesNotExist:
+        raise Response(status=status.HTTP_404_NOT_FOUND)
 
-
+    if request.method == 'GET':
+        serializer = PostSerializer(data, many=True)
+        return Response({'posts': serializer.data})
