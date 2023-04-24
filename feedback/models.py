@@ -9,7 +9,5 @@ class Feedback(models.Model):
     user = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
     like = models.BooleanField()
     dislike = models.BooleanField()
-    report = models.BooleanField()
-    details = models.TextField(max_length=250, blank=True)
     created_at= models.DateTimeField(auto_now_add=True)
 

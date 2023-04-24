@@ -3,6 +3,7 @@ from group.models import Group
 from users.models import User
 from feedback.models import Feedback
 from django.http import JsonResponse, Http404
+from django.core import serializers
 from feedback.serializers import FeedbackSerializer, LikeSerializer, DislikeSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -51,11 +52,11 @@ def new_like(request):
         group_id = data.get('group')
         user_id = data.get('user')
         like = data.get('like')
-
+        dislike = data.get('dislike')
         group = Group.objects.get(id=group_id)
         user = User.objects.get(id=user_id)   
 
-        feedback = Feedback(group=group, user=user, like=like)
+        feedback = Feedback(group=group, user=user, like=like, dislike=dislike)
         feedback.save()
 
         response = serializers.serialize('json', [feedback])
@@ -69,13 +70,14 @@ def new_dislike(request):
         data = json.loads(request.body) 
         group_id = data.get('group')
         user_id = data.get('user')
+        like = data.get('like')
         dislike = data.get('dislike')
-        detail = data.get('detail')
+
 
         group = Group.objects.get(id=group_id)
         user = User.objects.get(id=user_id)   
 
-        feedback = Feedback(group=group, user=user, dislike=dislike, detail=detail)
+        feedback = Feedback(group=group, user=user, like=like, dislike=dislike)
         feedback.save()
 
         response = serializers.serialize('json', [feedback])

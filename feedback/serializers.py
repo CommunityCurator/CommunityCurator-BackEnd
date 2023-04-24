@@ -5,7 +5,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Feedback
-        fields = ['id', 'group', 'user', 'like', 'dislike', 'report', 'details', 'created_at']
+        fields = ['id', 'group', 'user', 'like', 'dislike', 'created_at']
         depth = 2
 
 class LikeSerializer(serializers.ModelSerializer):
