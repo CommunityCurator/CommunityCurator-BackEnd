@@ -8,19 +8,35 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Count
+from datetime import date
+
 
 @api_view(['GET', 'POST'])
 def feedbacks(request):
+    
     if request.method == 'GET':
         data = Feedback.objects.all()
         serializer = FeedbackSerializer(data, many=True)
         return Response({'feedbacks': serializer.data})
     elif request.method == 'POST':
-        serializer = FeedbackSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'feedback': serializer.data}, status=status.HTTP_201_CREATED)
+        
+
+        # added code - was not able to use the serializer to implement to add functionality. Borrowered from the update new_like method beginning on 67 to get this post action to work.
+        print(request.data["user"])
+        group = Group.objects.get(id=request.data["group"])
+        user = User.objects.get(id=request.data["user"])   
+
+        feedback = Feedback(group=group, user=user, like=request.data["like"], dislike=request.data["dislike"], report=request.data["report"], created_at= request.data["created_at"])
+        feedback.save()
+         
+        # serializer = FeedbackSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response({'feedback': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+      
 
 @api_view(['GET','POST', 'DELETE'])
 def feedback(request, id):
@@ -38,6 +54,7 @@ def feedback(request, id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == 'POST':
+       
         serializer = FeedbackSerializer(data, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -58,7 +75,7 @@ def new_like(request):
         feedback = Feedback(group=group, user=user, like=like)
         feedback.save()
 
-        response = serializers.serialize('json', [feedback])
+        response = feedback.serializers.serialize('json', [feedback])
         return JsonResponse(response, safe=False, status=201)
     else:
         return JsonResponse(response, safe=False, status=201)
@@ -78,7 +95,7 @@ def new_dislike(request):
         feedback = Feedback(group=group, user=user, dislike=dislike, detail=detail)
         feedback.save()
 
-        response = serializers.serialize('json', [feedback])
+        response = feedback.serializers.serialize('json', [feedback])
         return JsonResponse(response, safe=False, status=201)
     else:
         return JsonResponse(response, safe=False, status=201)
